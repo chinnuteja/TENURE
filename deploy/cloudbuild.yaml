@@ -1,0 +1,36 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - --tag
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/tenure:$COMMIT_SHA
+      - .
+
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/tenure:$COMMIT_SHA
+
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - tenure
+      - --image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/tenure:$COMMIT_SHA
+      - --region=${_REGION}
+      - --service-account=${_SERVICE_ACCOUNT}
+      - --set-env-vars=TENURE_RUNTIME=cloud,GOOGLE_CLOUD_PROJECT=$PROJECT_ID,GOOGLE_CLOUD_LOCATION=global,TENURE_RESOURCE_LOCATION=${_REGION},GOOGLE_GENAI_USE_VERTEXAI=true,TENURE_INCIDENT_TOPIC=tenure-incidents,TENURE_LEDGER_COLLECTION=tenure_trust_events,TENURE_SUPERVISOR_SECRET=tenure-supervisor-envelope-key,TENURE_MODEL_ARMOR_TEMPLATE=${_MODEL_ARMOR_TEMPLATE}
+      - --allow-unauthenticated
+
+images:
+  - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/tenure:$COMMIT_SHA
+
+substitutions:
+  _REGION: us-central1
+  _REPOSITORY: tenure
+  _SERVICE_ACCOUNT: tenure-control-room@$PROJECT_ID.iam.gserviceaccount.com
+  _MODEL_ARMOR_TEMPLATE: tenure-untrusted-input
+
+options:
+  logging: CLOUD_LOGGING_ONLY

@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#080906" />
+    <title>TENURE / Authority Flight Recorder</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main class="console">
+      <header class="masthead">
+        <a class="wordmark" href="/" aria-label="TENURE dashboard">
+          <span class="wordmark-index">T/01</span>
+          <strong>TENURE</strong>
+          <span>earned authority system</span>
+        </a>
+        <div class="system-truth">
+          <span><i class="live-dot"></i> LOCAL PROOF</span>
+          <span id="integrityLabel">CHAIN / VERIFIED</span>
+          <span id="clock">00:00:00 IST</span>
+        </div>
+      </header>
+
+      <section class="runway" aria-labelledby="scenarioHeading">
+        <div class="runway-copy">
+          <p class="kicker">LIVE / ACCOUNTS PAYABLE / 01</p>
+          <h1 id="scenarioHeading">Authority must be <em>earned.</em></h1>
+          <p id="scenarioCopy">The agent begins with proposal rights only. Advance the evidence chain and watch the boundary—not the model—decide what it may do.</p>
+        </div>
+        <div class="runway-controls">
+          <button id="runButton" class="run-button"><span>Run evidence sequence</span><b>↗</b></button>
+          <div class="minor-controls">
+            <button id="advanceButton">Step / <span id="nextStepLabel">01</span></button>
+            <button id="resetButton">Reset</button>
+          </div>
+          <div class="sequence-progress" aria-label="Scenario progress">
+            <span id="progressBar"></span>
+          </div>
+          <small id="progressLabel">00—08 / WAITING</small>
+        </div>
+      </section>
+
+      <section class="instrument-grid">
+        <aside class="authority-rail" aria-labelledby="railHeading">
+          <div class="section-code">A</div>
+          <p class="kicker" id="railHeading">CAPABILITY RAIL</p>
+          <div class="agent-identity">
+            <span>SUBJECT</span>
+            <strong>accounts-<br />payable-agent</strong>
+          </div>
+          <ol id="authorityLevels" class="authority-levels"></ol>
+          <div class="scope-readout">
+            <span>HARD CEILING</span>
+            <strong id="ceiling">—</strong>
+            <small>vendor allowlist / enforced</small>
+          </div>
+        </aside>
+
+        <article class="trust-aperture" aria-labelledby="apertureHeading">
+          <div class="section-label">
+            <span class="section-code">B</span>
+            <div><p class="kicker">AUTHORITY APERTURE</p><h2 id="apertureHeading">invoice.approve</h2></div>
+            <span id="grantBadge" class="signal-tag">SHADOW</span>
+          </div>
+          <div class="aperture-stage">
+            <svg class="aperture-svg" viewBox="0 0 620 430" role="img" aria-label="Current capability authority instrument">
+              <defs>
+                <filter id="softGlow"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              </defs>
+              <g class="datum-lines">
+                <path d="M70 215H550"/><path d="M310 24V406"/>
+                <circle cx="310" cy="215" r="168"/><circle cx="310" cy="215" r="122"/><circle cx="310" cy="215" r="76"/>
+              </g>
+              <circle class="authority-track" cx="310" cy="215" r="146" pathLength="100"/>
+              <circle id="authorityArc" class="authority-arc" cx="310" cy="215" r="146" pathLength="100"/>
+              <circle id="containmentRing" class="containment-ring" cx="310" cy="215" r="176" pathLength="100"/>
+              <g class="aperture-center">
+                <text x="310" y="178">CURRENT GRANT</text>
+                <text id="levelNumber" class="level-number" x="310" y="244">01</text>
+                <text id="levelName" class="level-name" x="310" y="276">SHADOW</text>
+              </g>
+              <g class="orbit-copy">
+                <text x="310" y="37">SCOPE-BOUND</text><text x="310" y="414">REVOCABLE</text>
+                <text x="42" y="219" transform="rotate(-90 42 219)">DETERMINISTIC GRANT</text>
+                <text x="578" y="219" transform="rotate(90 578 219)">SIGNED EVIDENCE</text>
+              </g>
+              <g id="apertureTicks" class="aperture-ticks"></g>
+            </svg>
+            <div class="aperture-caption">
+              <span id="freezeState"><i></i> GATEWAY ACTIVE</span>
+              <span id="evidenceCount">0 verified / 0 grounded</span>
+            </div>
+          </div>
+        </article>
+
+        <aside class="evidence-quadrant" aria-labelledby="matrixHeading">
+          <div class="section-code">C</div>
+          <p class="kicker">DUAL-GATE MATRIX</p>
+          <h2 id="matrixHeading">Outcome is not enough.</h2>
+          <div class="matrix" aria-label="Outcome and grounding evidence matrix">
+            <span class="axis axis-y">OUTCOME</span><span class="axis axis-x">GROUNDING</span>
+            <div class="matrix-cell wrong"><small>WRONG / WRONG</small><strong>0</strong></div>
+            <div class="matrix-cell lucky"><small>RIGHT / WRONG</small><strong id="rawrCount">0</strong><b>RAWR</b></div>
+            <div class="matrix-cell invalid"><small>WRONG / RIGHT</small><strong>0</strong></div>
+            <div class="matrix-cell earned"><small>RIGHT / RIGHT</small><strong id="validCount">0</strong><b>EARNED</b></div>
+          </div>
+          <p class="matrix-note" id="matrixNote">Promotion requires both coordinates to hold.</p>
+        </aside>
+      </section>
+
+      <section class="incident-grid">
+        <article class="topology" aria-labelledby="topologyHeading">
+          <div class="section-label compact">
+            <span class="section-code">D</span>
+            <div><p class="kicker">BLAST-RADIUS TOPOLOGY</p><h2 id="topologyHeading">No exposed actions.</h2></div>
+            <span id="incidentTag" class="signal-tag quiet">STANDBY</span>
+          </div>
+          <svg id="topologySvg" class="topology-svg" viewBox="0 0 800 350" role="img" aria-label="Supervisor incident blast-radius graph"></svg>
+          <div class="topology-legend">
+            <span><i class="node-key reversible"></i> reversible / rollback</span>
+            <span><i class="node-key irreversible"></i> irreversible / escalate</span>
+            <span><i class="node-key boundary"></i> capability boundary</span>
+          </div>
+        </article>
+
+        <article class="supervisor-brief" aria-labelledby="supervisorHeading">
+          <div class="section-label compact">
+            <span class="section-code">E</span>
+            <div><p class="kicker">SUPERVISOR BRIEF</p><h2 id="supervisorHeading">Judgment waits for safety.</h2></div>
+          </div>
+          <div id="supervisorBody" class="supervisor-empty">
+            <span>01</span><p>Deterministic containment has not opened an incident.</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="proof-grid">
+        <article class="flight-recorder" aria-labelledby="ledgerHeading">
+          <div class="section-label compact">
+            <span class="section-code">F</span>
+            <div><p class="kicker">INCIDENT FLIGHT RECORDER</p><h2 id="ledgerHeading">Append-only decision chain</h2></div>
+            <span id="eventCount" class="mono-readout">001 EVENT</span>
+          </div>
+          <div class="event-head"><span>SEQ</span><span>UTC / HASH</span><span>DECISION</span><span>PLANE</span></div>
+          <div id="timeline" class="timeline"></div>
+        </article>
+
+        <aside class="receipt-inspector" aria-labelledby="receiptHeading">
+          <div class="section-label compact">
+            <span class="section-code">G</span>
+            <div><p class="kicker">TRUST RECEIPT</p><h2 id="receiptHeading">Boundary proof</h2></div>
+            <span id="receiptDecision" class="signal-tag quiet">WAITING</span>
+          </div>
+          <dl id="receipt" class="receipt"></dl>
+        </aside>
+      </section>
+
+      <section id="metricTape" class="metric-tape" aria-label="Measured proof"></section>
+
+      <footer class="footer">
+        <p id="cloudTruth">LOCAL PRODUCT PROOF / LIVE GOOGLE PROOF AWAITS BILLING</p>
+        <div id="integrations" class="integration-strip"></div>
+      </footer>
+    </main>
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>

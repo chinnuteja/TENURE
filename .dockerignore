@@ -1,0 +1,8 @@
+.git
+.venv
+.pytest-tmp
+__pycache__
+*.pyc
+data
+docs
+tests

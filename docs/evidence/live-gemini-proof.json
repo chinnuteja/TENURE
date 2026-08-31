@@ -1,0 +1,34 @@
+{
+  "schema": "tenure.live-supervisor-proof/v1",
+  "captured_at": "2026-09-01T00:00:00+05:30",
+  "environment": "local",
+  "provider": "Google Gemini API through Google ADK",
+  "model": "gemini-3.5-flash-lite",
+  "data": "synthetic",
+  "result": {
+    "reasoner_mode": "GEMINI_ADK",
+    "model_calls": 1,
+    "tool_categories_used": [
+      "escalation",
+      "graph",
+      "ledger",
+      "memory",
+      "registry",
+      "rollback",
+      "trace"
+    ],
+    "freeze_preceded_supervision": true,
+    "demotion_depth": "DOWNSTREAM_CHAIN",
+    "target_authority": "OBSERVE",
+    "affected_capabilities": 3,
+    "compensating_rollbacks": 3,
+    "escalations": 1,
+    "proposal_policy_validation": "ACCEPTED",
+    "ledger_integrity": true
+  },
+  "limitations": [
+    "This is one bounded live run, not a statistical model-reliability evaluation.",
+    "Business actions and incident data were synthetic.",
+    "The deterministic policy validator, not the model, retained final authority."
+  ]
+}

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">TENURE system architecture</title>
+  <desc id="desc">Deterministic earned authority and containment around a Google ADK Gemini Supervisor Agent, connected to Google Cloud enterprise agent services.</desc>
+  <defs>
+    <style>
+      .bg{fill:#f6f6ef}.ink{fill:#142522}.muted{fill:#60706b}.lime{fill:#d7ff73}.mint{fill:#e8f1e5}.sand{fill:#efe8d6}.cloud{fill:#eef3ff}.line{stroke:#81918b;stroke-width:2;fill:none}.dash{stroke:#81918b;stroke-width:2;stroke-dasharray:8 8;fill:none}.box{fill:#fff;stroke:#b8c3bd;stroke-width:2}.dark{fill:#142522}.t{font-family:Arial,sans-serif}.mono{font-family:Consolas,monospace;letter-spacing:1.5px}.h1{font-size:42px;font-weight:700}.h2{font-size:23px;font-weight:700}.body{font-size:17px}.small{font-size:14px}.white{fill:#fff}
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#81918b"/></marker>
+  </defs>
+  <rect class="bg" width="1600" height="900"/>
+  <rect class="dark" x="0" y="0" width="1600" height="92"/>
+  <text class="t h1 white" x="54" y="58">TENURE</text>
+  <text class="mono small" x="260" y="39" fill="#d7ff73">EARNED AUTHORITY FOR ENTERPRISE AGENTS</text>
+  <text class="t body white" x="260" y="66">Deterministic where safety belongs. Agentic where judgment belongs.</text>
+
+  <text class="mono small muted" x="54" y="135">1 / USEFUL WORK ACROSS THE FLEET</text>
+  <rect class="box" x="54" y="160" rx="14" width="270" height="120"/>
+  <text class="t h2 ink" x="82" y="202">Vendor Agent</text><text class="mono small muted" x="82" y="230">vendor.onboard</text><text class="t small ink" x="82" y="258">Procurement</text>
+  <rect class="box" x="370" y="160" rx="14" width="270" height="120"/>
+  <text class="t h2 ink" x="398" y="202">Invoice Agent</text><text class="mono small muted" x="398" y="230">invoice.approve</text><text class="t small ink" x="398" y="258">Accounts Payable</text>
+  <rect class="box" x="686" y="160" rx="14" width="270" height="120"/>
+  <text class="t h2 ink" x="714" y="202">Treasury Agent</text><text class="mono small muted" x="714" y="230">payment.release</text><text class="t small ink" x="714" y="258">Finance</text>
+  <path class="line" d="M324 220H370" marker-end="url(#arrow)"/><path class="line" d="M640 220H686" marker-end="url(#arrow)"/>
+  <rect class="cloud" x="1000" y="135" rx="16" width="546" height="170" stroke="#99aee5" stroke-width="2"/>
+  <text class="mono small muted" x="1030" y="170">GOOGLE ENTERPRISE AGENT PLATFORM</text>
+  <text class="t body ink" x="1030" y="207">Agent Runtime · Registry · Identity · Memory Bank</text>
+  <text class="t body ink" x="1030" y="239">Cloud Run · Firestore · Pub/Sub · Model Armor</text>
+  <text class="t body ink" x="1030" y="271">OpenTelemetry → Cloud Trace</text>
+
+  <text class="mono small muted" x="54" y="340">2 / DETERMINISTIC AUTHORITY LANE</text>
+  <rect class="mint" x="54" y="365" rx="18" width="902" height="194" stroke="#90aa95" stroke-width="2"/>
+  <rect class="box" x="84" y="402" rx="12" width="184" height="112"/><text class="t h2 ink" x="108" y="439">Evidence</text><text class="t small muted" x="108" y="469">Outcome + grounding</text><text class="t small muted" x="108" y="493">Freshness + identity</text>
+  <rect class="box" x="302" y="402" rx="12" width="184" height="112"/><text class="t h2 ink" x="326" y="439">Policy</text><text class="t small muted" x="326" y="469">Fixed promotion gates</text><text class="t small muted" x="326" y="493">Counterfactual replay</text>
+  <rect class="box" x="520" y="402" rx="12" width="184" height="112"/><text class="t h2 ink" x="544" y="439">Passport</text><text class="t small muted" x="544" y="469">Capability + ceiling</text><text class="t small muted" x="544" y="493">Short-lived grant</text>
+  <rect class="dark" x="738" y="402" rx="12" width="188" height="112"/><text class="t h2 white" x="762" y="439">Action Gate</text><text class="t small white" x="762" y="469">Allow or deny</text><text class="t small" x="762" y="493" fill="#d7ff73">Signed receipt</text>
+  <path class="line" d="M268 458H302" marker-end="url(#arrow)"/><path class="line" d="M486 458H520" marker-end="url(#arrow)"/><path class="line" d="M704 458H738" marker-end="url(#arrow)"/>
+  <rect class="sand" x="1000" y="365" rx="18" width="546" height="194" stroke="#c5b78f" stroke-width="2"/>
+  <text class="mono small muted" x="1030" y="404">REAL EFFECTS, SAFE BOUNDARY</text>
+  <text class="t h2 ink" x="1030" y="444">Synthetic procure-to-pay sandbox</text>
+  <text class="t body ink" x="1030" y="479">Vendor → invoice → reversible payment</text>
+  <text class="t body ink" x="1030" y="511">No bank connection. No real funds.</text>
+  <path class="line" d="M956 462H1000" marker-end="url(#arrow)"/>
+
+  <text class="mono small muted" x="54" y="615">3 / FAILURE: FREEZE FIRST, THEN USE JUDGMENT</text>
+  <rect x="54" y="640" rx="18" width="300" height="176" fill="#402e2b"/>
+  <text class="mono small" x="84" y="680" fill="#ffb9a9">DETERMINISTIC CONTAINMENT</text><text class="t h2 white" x="84" y="720">Freeze affected capability</text><text class="t body white" x="84" y="754">Blocks new mutations before</text><text class="t body white" x="84" y="779">any model call.</text>
+  <rect class="cloud" x="400" y="640" rx="18" width="470" height="176" stroke="#99aee5" stroke-width="2"/>
+  <text class="mono small muted" x="430" y="680">GEMINI 3.5 + GOOGLE ADK</text><text class="t h2 ink" x="430" y="720">Supervisor Agent investigates</text><text class="t body ink" x="430" y="754">Ledger · Registry · Memory · Trace</text><text class="t body ink" x="430" y="779">Dependency graph · Rollback · Escalation</text>
+  <rect class="lime" x="916" y="640" rx="18" width="630" height="176" stroke="#94b33c" stroke-width="2"/>
+  <text class="mono small ink" x="946" y="680">POLICY-BOUNDED RESULT</text><text class="t h2 ink" x="946" y="720">Validate → demote → compensate</text><text class="t body ink" x="946" y="754">The model may preserve or reduce authority—never expand it.</text><text class="t body ink" x="946" y="779">Irreversible consequences become evidence-complete escalations.</text>
+  <path class="line" d="M354 728H400" marker-end="url(#arrow)"/><path class="line" d="M870 728H916" marker-end="url(#arrow)"/>
+  <path class="dash" d="M1273 305V365" marker-end="url(#arrow)"/><path class="dash" d="M1273 559V640" marker-end="url(#arrow)"/>
+  <text class="t small muted" x="54" y="866">Every claim resolves to an identity, evidence window, policy revision, capability passport, action receipt, trace, and current authority.</text>
+</svg>

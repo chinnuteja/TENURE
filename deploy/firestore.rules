@@ -1,0 +1,9 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // TENURE event collections are server-only. Browser clients can neither read nor write.
+    match /{collection}/{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
