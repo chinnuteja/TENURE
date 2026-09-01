@@ -23,6 +23,24 @@ else:
     os.environ.setdefault("TENURE_SUPERVISOR_PROVIDER", "fixture")
     os.environ.setdefault("TENURE_DATA_DIR", str(ROOT / ".tenure" / "vercel-runs"))
 
-from tenure.api import app  # noqa: E402
+try:
+    from tenure.api import app  # noqa: E402
+except Exception as exc:  # pragma: no cover - exercised only by deployment packaging
+    from fastapi import FastAPI
+
+    startup_error = {
+        "error_type": type(exc).__name__,
+        "message": str(exc)[:500],
+    }
+    app = FastAPI(title="TENURE deployment diagnostic")
+
+    @app.get("/{path:path}")
+    def deployment_diagnostic(path: str) -> dict[str, object]:
+        return {
+            "service": "tenure",
+            "status": "startup_error",
+            "path": path,
+            **startup_error,
+        }
 
 __all__ = ["app"]
