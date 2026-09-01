@@ -7,8 +7,6 @@ import sys
 import tempfile
 from pathlib import Path
 
-from fastapi import FastAPI
-
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT / "src"))
 
@@ -25,25 +23,6 @@ else:
     os.environ.setdefault("TENURE_SUPERVISOR_PROVIDER", "fixture")
     os.environ.setdefault("TENURE_DATA_DIR", str(ROOT / ".tenure" / "vercel-runs"))
 
-app = FastAPI(title="TENURE")
-
-try:
-    from tenure.api import app as tenure_app  # noqa: E402
-except Exception as exc:  # pragma: no cover - exercised only by deployment packaging
-    startup_error = {
-        "error_type": type(exc).__name__,
-        "message": str(exc)[:500],
-    }
-
-    @app.get("/{path:path}")
-    def deployment_diagnostic(path: str) -> dict[str, object]:
-        return {
-            "service": "tenure",
-            "status": "startup_error",
-            "path": path,
-            **startup_error,
-        }
-else:
-    app.mount("/", tenure_app)
+from tenure.api import app  # noqa: E402
 
 __all__ = ["app"]
