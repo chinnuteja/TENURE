@@ -18,6 +18,7 @@ from tenure.cloud_adapters import (
     SecretManagerProvider,
     SignedIncidentPublisher,
 )
+from tenure.company import CompanyFleet, CompanyRecoveryOrchestrator, LocalHeuristicPromptScreen
 from tenure.fleet import ProcureToPayFleet
 from tenure.ledger import TrustLedger
 from tenure.model_armor import ModelArmorGateway
@@ -187,6 +188,26 @@ def build_runtime_fleet() -> ProcureToPayFleet:
             project_id=settings.project_id,
             database=settings.firestore_database,
         ),
+    )
+
+
+def build_company_recovery(fleet: CompanyFleet) -> CompanyRecoveryOrchestrator:
+    """The company pack is always in-memory; the Supervisor and prompt guard vary."""
+    live = (
+        selected_runtime() is RuntimeMode.CLOUD
+        or selected_supervisor_provider() is SupervisorProvider.GEMINI
+    )
+    prompt_guard = None
+    if selected_runtime() is RuntimeMode.CLOUD:
+        settings = CloudSettings.from_env()
+        if settings.model_armor_template:
+            prompt_guard = ModelArmorGateway(
+                settings.project_id, settings.location, settings.model_armor_template
+            )
+    return CompanyRecoveryOrchestrator(
+        fleet,
+        reasoner=AdkFleetRecoveryReasoner() if live else None,
+        prompt_guard=prompt_guard or LocalHeuristicPromptScreen(),
     )
 
 

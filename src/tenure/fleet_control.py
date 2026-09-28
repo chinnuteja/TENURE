@@ -78,9 +78,16 @@ class FirestoreAtomicStore:
 
 
 class FleetControl:
-    def __init__(self, store=None, *, replay_wait_seconds: float = 5.0) -> None:
+    def __init__(
+        self,
+        store=None,
+        *,
+        replay_wait_seconds: float = 5.0,
+        operating_keys: tuple[str, ...] = OPERATING_KEYS,
+    ) -> None:
         self.store = store or MemoryAtomicStore()
         self.replay_wait_seconds = replay_wait_seconds
+        self.operating_keys = operating_keys
 
     def snapshot(self, tenant_id: str) -> dict:
         return self.store.transact("authority", tenant_id, lambda state, _: deepcopy(state))
@@ -96,7 +103,7 @@ class FleetControl:
                 return
             for event in events:
                 key = event.payload.get("capability_key")
-                if key not in OPERATING_KEYS:
+                if key not in self.operating_keys:
                     continue
                 entry = state.setdefault(key, {
                     "level": "OBSERVE", "amount_ceiling": 0, "freezes": [], "version": 1,
@@ -118,7 +125,7 @@ class FleetControl:
 
     def preflight(self, tenant_id: str) -> None:
         def check(state, _):
-            for key in OPERATING_KEYS:
+            for key in self.operating_keys:
                 self._require(state, key, missing_allowed=True)
         self.store.transact("authority", tenant_id, check)
 

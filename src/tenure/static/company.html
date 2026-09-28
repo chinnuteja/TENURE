@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#172724">
+  <title>TENURE — Company authority kernel</title>
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/fleet.css">
+  <link rel="stylesheet" href="/static/company.css">
+  <script src="/static/company.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to the company run</a>
+  <header class="mast">
+    <a class="brand" href="/" aria-label="TENURE home"><span class="brand-symbol">t<span>↗</span></span><strong>TENURE</strong><span class="brand-sub">COMPANY AUTHORITY</span></a>
+    <nav aria-label="Main navigation">
+      <a href="/company" aria-current="page">Company OS</a>
+      <a href="/">Fleet room</a>
+      <a href="/proof">Proof lab</a>
+      <a href="/limitations">Scope & limits</a>
+    </nav>
+    <span id="environment" class="environment">SYNTHETIC WORKSPACE</span>
+  </header>
+  <main id="main" tabindex="-1">
+    <div id="error" class="notice error" role="alert" hidden></div>
+    <section class="page-heading">
+      <div>
+        <p class="eyebrow">ONE AGENT · FOUR TOOLS · SEPARATE AUTHORITY</p>
+        <h1>The agent that runs the company should not have <span>one credential.</span></h1>
+        <p class="intro">Acme Robotics asks in Slack for SAML SSO before they expand. The company agent files the Linear issue, merges the GitHub pull request, marks the Attio deal won, and sends the Stripe invoice. Each action is earned on its own. Two others are registered and still refused.</p>
+      </div>
+      <span class="outline-stamp">NO LIVE GITHUB<br>NO LIVE STRIPE<br>SYNTHETIC SANDBOX</span>
+    </section>
+
+    <section class="company-run">
+      <form id="runForm" class="company-brief">
+        <p class="eyebrow">THE ASK</p>
+        <h2>Acme wants SSO before they sign.</h2>
+        <p class="muted">Expansion value is the ceiling the billing capabilities must stay inside. Default $18,400. Maximum earned ceiling is $50,000.</p>
+        <label>Expansion value <span>USD, sandbox</span>
+          <span class="amount-input">$<input id="amount" name="amount" type="number" min="1" max="50000" value="18400" required></span>
+        </label>
+        <p class="field-help">Customer: Acme Robotics · Channel: Slack Connect · Repo: acme-app/web · CRM: Attio · Billing: Stripe</p>
+        <button class="button primary" id="runButton" type="submit">Run the company agent <span>→</span></button>
+      </form>
+
+      <ol id="chain" class="chain" aria-label="Earned action chain">
+        <li data-step="issue"><span>01</span><div><small>LINEAR</small><strong>File the issue</strong><em>waiting</em></div></li>
+        <li data-step="pull_request"><span>02</span><div><small>GITHUB</small><strong>Merge the PR</strong><em>waiting</em></div></li>
+        <li data-step="deal"><span>03</span><div><small>ATTIO</small><strong>Close the deal</strong><em>waiting</em></div></li>
+        <li data-step="invoice"><span>04</span><div><small>STRIPE</small><strong>Send the invoice</strong><em>waiting</em></div></li>
+      </ol>
+    </section>
+
+    <section class="authority-board" aria-live="polite">
+      <div class="section-title">
+        <div><p class="eyebrow">WHAT THIS AGENT MAY DO</p><h2>Registration is not authority.</h2></div>
+        <p id="caseMeta" class="muted">No case yet. The agent starts with nothing it can execute.</p>
+      </div>
+      <div class="table-scroll">
+        <table class="comparison" id="authorityTable">
+          <caption>Capability passports for this company agent</caption>
+          <thead><tr><th>Capability</th><th>Tool</th><th>Level</th><th>Why</th></tr></thead>
+          <tbody>
+            <tr><td colspan="4">Run the case to earn the four operating capabilities.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="recovery-panel" id="breakPanel" hidden>
+      <div class="recovery-heading">
+        <div>
+          <p class="eyebrow">THEN THE EVIDENCE BREAKS</p>
+          <h2 id="breakTitle">The Slack message was not Acme.</h2>
+          <p id="breakCopy">Containment freezes every capability that depended on that message before the supervisor is asked anything.</p>
+        </div>
+      </div>
+      <div class="recovery-controls">
+        <div>
+          <label for="scenario">What became untrustworthy</label>
+          <select id="scenario">
+            <option value="injected_slack_instruction">Injected Slack instruction — the whole chain</option>
+            <option value="bad_merge">The merge itself was wrong</option>
+            <option value="billing_mismatch">The deal and the invoice disagree</option>
+            <option value="pricing_policy_changed">Pricing policy changed underneath</option>
+          </select>
+        </div>
+        <button class="button danger" id="breakButton" type="button">Freeze, then investigate <span>→</span></button>
+      </div>
+      <p class="field-help">The model, when one is configured, only proposes. Deterministic policy accepts or rejects. A rejected proposal leaves the freeze in place.</p>
+
+      <ol class="pipeline" aria-label="Order of operations">
+        <li data-stage="detect"><span>1</span><div>Detect<em>screen the trigger</em></div></li>
+        <li data-stage="freeze"><span>2</span><div>Freeze<em>before any model call</em></div></li>
+        <li data-stage="investigate"><span>3</span><div>Investigate<em>Supervisor tools</em></div></li>
+        <li data-stage="validate"><span>4</span><div>Validate<em>deterministic policy</em></div></li>
+        <li data-stage="recover"><span>5</span><div>Recover<em>rollback + escalate</em></div></li>
+      </ol>
+
+      <div id="promptScreen" class="prompt-screen" hidden>
+        <p class="eyebrow">01 / DETECTION — WHAT ACTUALLY ARRIVED</p>
+        <blockquote id="promptMessage"></blockquote>
+        <div class="prompt-verdict">
+          <span id="promptVerdict" class="tiny-tag"></span>
+          <span id="promptMatches" class="muted"></span>
+        </div>
+        <p id="promptDisclosure" class="field-help"></p>
+      </div>
+
+      <div id="breakResult" class="recovery-result" hidden></div>
+
+      <div id="toolTrace" class="tool-trace" hidden>
+        <p class="eyebrow">03 / INVESTIGATION — EVERY TOOL CALL, IN ORDER</p>
+        <p id="reasonerMode" class="muted"></p>
+        <ol id="toolTraceList"></ol>
+      </div>
+    </section>
+
+    <section class="record-section">
+      <div class="section-title">
+        <div><p class="eyebrow">SIGNED RECEIPTS</p><h2>Every mutation has a passport.</h2></div>
+      </div>
+      <div id="receipts" class="event-list"><p class="empty-record">Receipts appear after the case runs.</p></div>
+    </section>
+
+    <section class="boundary-note">
+      <strong>What this is</strong>
+      <p>A working authority kernel on synthetic Linear, GitHub, Attio, and Stripe records. No repository is cloned, no invoice is emailed, no payment moves. Irreversible consequences — a production deploy, an email already sent — are escalated, not pretended away.</p>
+      <a href="/limitations">Full scope and limits</a>
+    </section>
+  </main>
+  <footer>
+    <span class="footer-brand">TENURE<span>Company authority kernel</span></span>
+    <p>Built as the layer under an agent that runs a company: earn each capability, freeze dependents first, roll back what is reversible, escalate what a customer has already seen.</p>
+    <a href="/">Procure-to-pay fleet</a>
+  </footer>
+  <dialog id="receiptDialog">
+    <div class="dialog-head"><p class="eyebrow">ACTION RECEIPT</p><button class="icon-button" id="closeReceipt" type="button" aria-label="Close">×</button></div>
+    <h2 id="receiptTitle"></h2>
+    <pre id="receiptBody"></pre>
+  </dialog>
+</body>
+</html>

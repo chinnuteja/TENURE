@@ -9,11 +9,13 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
+from tenure.company import CompanyFleet, CompanyScenario
 from tenure.fleet_control import CaseConflict, CaseInProgress
 from tenure.native_proof import NativeIdentityProof, ProofBusy, ProofUnavailable
 from tenure.platform import platform_evidence
 from tenure.recovery import RecoveryPolicyError, RecoveryScenario
 from tenure.runtime import (
+    build_company_recovery,
     build_runtime_fleet,
     build_runtime_recovery,
     build_runtime_scenario,
@@ -38,7 +40,74 @@ def create_app(scenario: TenureScenario | None = None) -> FastAPI:
     app.state.scenario = runtime
     app.state.fleet = fleet
     app.state.recovery = recovery
+    company = CompanyFleet()
+    company_recovery = build_company_recovery(company)
+    app.state.company = company
+    app.state.company_recovery = company_recovery
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+
+    @app.get("/company", include_in_schema=False)
+    def company_dashboard() -> FileResponse:
+        return FileResponse(STATIC_DIR / "company.html")
+
+    @app.get("/api/company/registry")
+    def company_registry(tenant_id: str | None = None) -> dict[str, object]:
+        return {
+            "agents": company.registry.discover(),
+            "dependency_edges": [edge.snapshot() for edge in company.dependencies.edges],
+            "authority": company.authority_table(tenant_id) if tenant_id else [],
+            "supervisor_mode": company_recovery.reasoner.mode,
+        }
+
+    @app.post("/api/company/cases/{case_id}")
+    def run_company_case(
+        case_id: str,
+        tenant_id: str,
+        amount: int = Query(default=18_400, ge=1, le=50_000),
+    ) -> dict[str, object]:
+        try:
+            return company.run_case(tenant_id=tenant_id, case_id=case_id, amount=amount)
+        except CaseInProgress as exc:
+            raise HTTPException(
+                status_code=409, detail=str(exc), headers={"Retry-After": "2"},
+            ) from exc
+        except CaseConflict as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+        except PermissionError as exc:
+            raise HTTPException(status_code=403, detail=str(exc)) from exc
+
+    @app.get("/api/company/cases/{case_id}/audit")
+    def audit_company_case(case_id: str, tenant_id: str) -> dict[str, object]:
+        try:
+            return company.audit_case(tenant_id, case_id)
+        except PermissionError as exc:
+            raise HTTPException(status_code=403, detail="Tenant boundary denied") from exc
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="Company case not found") from exc
+
+    @app.post("/api/company/recovery/cases/{case_id}")
+    def run_company_recovery(
+        case_id: str,
+        tenant_id: str,
+        scenario: str = CompanyScenario.INJECTED_SLACK_INSTRUCTION.value,
+        amount: int = Query(default=18_400, ge=1, le=50_000),
+    ) -> dict[str, object]:
+        try:
+            selected = CompanyScenario(scenario)
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail="Unknown company scenario") from exc
+        try:
+            return company_recovery.run(
+                tenant_id=tenant_id, case_id=case_id, scenario=selected, amount=amount,
+            )
+        except RecoveryPolicyError as exc:
+            raise HTTPException(
+                status_code=409, detail=f"Supervisor proposal rejected: {exc}",
+            ) from exc
+        except CaseConflict as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+        except PermissionError as exc:
+            raise HTTPException(status_code=403, detail=str(exc)) from exc
 
     @app.get("/", include_in_schema=False)
     @app.get("/proof", include_in_schema=False)

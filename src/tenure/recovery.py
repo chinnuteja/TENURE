@@ -175,13 +175,16 @@ class FleetRecoveryPolicy:
         }
     )
 
+    def __init__(self, operating_keys: tuple[str, ...] | None = None) -> None:
+        self.operating_keys = operating_keys or self.OPERATING_KEYS
+
     def guardrail(
         self,
         context: RecoveryContext,
         graph: AuthorityDependencyGraph,
     ) -> RecoveryGuardrail:
         if context.policy_integrity != "verified":
-            scope = self.OPERATING_KEYS
+            scope = self.operating_keys
             depth = RecoveryDepth.FLEET
             target = AuthorityLevel.OBSERVE
         elif context.shared_upstream:
@@ -635,7 +638,7 @@ class AdkFleetRecoveryReasoner:
         prompt = {
             "task": "Investigate and propose the narrowest complete fleet recovery.",
             "incident": incident.snapshot(),
-            "known_capability_keys": list(FleetRecoveryPolicy.OPERATING_KEYS),
+            "known_capability_keys": sorted(incident.previous_authority),
             "known_actions": [action.snapshot() for action in toolbox.actions],
             "safety_ceiling": {
                 "previous_authority": incident.previous_authority,
@@ -720,6 +723,7 @@ class FleetRecoveryOrchestrator:
         memory_reader: MemoryReader | None = None,
         signing_key: bytes = b"tenure-local-recovery-envelope",
         trace_id: str | None = None,
+        policy: FleetRecoveryPolicy | None = None,
     ) -> None:
         self.fleet = fleet
         self.ledger = fleet.ledger
@@ -731,7 +735,7 @@ class FleetRecoveryOrchestrator:
         self.trace_id = trace_id or os.getenv(
             "TENURE_LAST_TRACE_ID", "trace-local-fleet-recovery"
         )
-        self.policy = FleetRecoveryPolicy()
+        self.policy = policy or FleetRecoveryPolicy()
 
     def run(
         self,
@@ -871,6 +875,18 @@ class FleetRecoveryOrchestrator:
             "SUPERVISOR_TOOL_ACCESSED", incident_id=incident.incident_id
         )
         first_tool_sequence = min(event.sequence for event in tool_events)
+        tool_trace = [
+            {
+                "sequence": event.sequence,
+                "category": event.payload["category"],
+                "tool": event.payload["tool"],
+                "detail": {
+                    k: v for k, v in event.payload.items()
+                    if k not in {"incident_id", "tenant_id", "case_id", "category", "tool"}
+                },
+            }
+            for event in sorted(tool_events, key=lambda event: event.sequence)
+        ]
         return {
             "incident": incident.snapshot(),
             "scenario": scenario.value,
@@ -879,6 +895,7 @@ class FleetRecoveryOrchestrator:
             "reasoner_mode": self.reasoner.mode,
             "model_calls": int(self.reasoner.mode == "GEMINI_ADK"),
             "tool_categories": sorted(toolbox.used_tools),
+            "tool_trace": tool_trace,
             "memory_retrieval_verified": toolbox.memory_retrieval_verified,
             "freeze_event_ids": [event.event_id for event in freeze_events],
             "incident_event_id": opened.event_id,
@@ -905,7 +922,7 @@ class FleetRecoveryOrchestrator:
         state = self.fleet.control.snapshot(tenant_id)
         previous = {
             key: state.get(key, {}).get("level", "OBSERVE")
-            for key in FleetRecoveryPolicy.OPERATING_KEYS
+            for key in self.policy.operating_keys
         }
         unsigned = {
             "incident_id": incident_id,

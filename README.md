@@ -12,6 +12,19 @@ writes the incident narrative, requests reversible compensation, and files escal
 **The architectural distinction:** promotion is deterministic because authority must be
 defensible. Failure investigation is agentic because incidents are contextual.
 
+## Company OS demo
+
+The same kernel, aimed at one agent that runs a company. Open `/company` (locally
+`http://127.0.0.1:8000/company`). Acme asks in Slack for SSO. The agent files a Linear
+issue, merges a GitHub pull request, marks an Attio deal won, and sends a Stripe
+invoice. Each step has its own earned passport. A refund and a branch-protection change
+stay refused. Then the Slack message is screened as injected: dependents freeze before
+the supervisor runs, reversible records roll back, and a production deploy plus an
+already-sent invoice email are escalated.
+
+The screen on the default demo is a local phrase match, not Google Model Armor. The
+page says which one ran. No live GitHub, Attio, or Stripe calls are made.
+
 ![TENURE architecture](docs/architecture.svg)
 
 ## Understand it in 20 seconds
@@ -149,10 +162,21 @@ The latest UI is verified locally. Billing closure prevented a final redeploy an
 native Agent Gateway is not claimed. See [`CLOUD-EVIDENCE.md`](docs/CLOUD-EVIDENCE.md)
 and [`THREAT-MODEL.md`](docs/THREAT-MODEL.md) for the precise boundary.
 
+## Point it at another company
+
+Do not fork the kernel. Copy `src/tenure/company.py` and the `/company` page, then change only the story:
+
+1. `STEPS` — the tool chain (capability, clause, before/after status).
+2. The sandbox methods those steps call, including what a rollback sets the record to.
+3. `SCENARIOS` — which capability is the root, who is downstream, and which effects are irreversible.
+4. The page copy in `static/company.html` and `company.js`.
+
+Promotion, passports, the gateway, the hash-chained ledger, freeze-before-supervisor, and proposal validation stay as they are. Register the new routes the same way `create_app` registers `/company`.
+
 ## Repository map
 
-- `src/tenure/` — authority kernel, fleet workflow, ADK supervisor, recovery, cloud
-  adapters, API, and UI.
+- `src/tenure/` — authority kernel, fleet workflow, Company OS pack (`company.py`),
+  ADK supervisor, recovery, cloud adapters, API, and UI.
 - `tests/` — deterministic verification suite.
 - `deploy/` — Google Cloud deployment and proof utilities.
 - `docs/` — architecture, evaluation, cloud evidence, threat model, and demo script.
