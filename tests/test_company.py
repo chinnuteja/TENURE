@@ -160,6 +160,9 @@ def test_company_api_runs_and_contains():
         assert 'id="promptScreen"' in page.text
         assert 'id="toolTrace"' in page.text
         assert 'id="promptDisclosure"' in page.text
+        assert 'id="guide"' in page.text
+        assert "The Company Company" in page.text
+        assert "Show the run" in page.text
         params = {"tenant_id": "ui-acme", "amount": 9_500}
         case = client.post("/api/company/cases/ui-sso", params=params)
         assert case.status_code == 200

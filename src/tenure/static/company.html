@@ -28,6 +28,7 @@
         <p class="eyebrow">ONE AGENT · FOUR TOOLS · SEPARATE AUTHORITY</p>
         <h1>The agent that runs the company should not have <span>one credential.</span></h1>
         <p class="intro">Acme Robotics asks in Slack for SAML SSO before they expand. The company agent files the Linear issue, merges the GitHub pull request, marks the Attio deal won, and sends the Stripe invoice. Each action is earned on its own. Two others are registered and still refused.</p>
+        <p><button class="guide-link" id="openGuide" type="button">Read this first</button></p>
       </div>
       <span class="outline-stamp">NO LIVE GITHUB<br>NO LIVE STRIPE<br>SYNTHETIC SANDBOX</span>
     </section>
@@ -45,10 +46,10 @@
       </form>
 
       <ol id="chain" class="chain" aria-label="Earned action chain">
-        <li data-step="issue"><span>01</span><div><small>LINEAR</small><strong>File the issue</strong><em>waiting</em></div></li>
-        <li data-step="pull_request"><span>02</span><div><small>GITHUB</small><strong>Merge the PR</strong><em>waiting</em></div></li>
-        <li data-step="deal"><span>03</span><div><small>ATTIO</small><strong>Close the deal</strong><em>waiting</em></div></li>
-        <li data-step="invoice"><span>04</span><div><small>STRIPE</small><strong>Send the invoice</strong><em>waiting</em></div></li>
+        <li data-step="issue"><span>01</span><div><small>LINEAR</small><strong>File the issue</strong><em>WAITING</em><code hidden></code></div></li>
+        <li data-step="pull_request"><span>02</span><div><small>GITHUB</small><strong>Merge the PR</strong><em>WAITING</em><code hidden></code></div></li>
+        <li data-step="deal"><span>03</span><div><small>ATTIO</small><strong>Close the deal</strong><em>WAITING</em><code hidden></code></div></li>
+        <li data-step="invoice"><span>04</span><div><small>STRIPE</small><strong>Send the invoice</strong><em>WAITING</em><code hidden></code></div></li>
       </ol>
     </section>
 
@@ -135,6 +136,27 @@
     <p>Built as the layer under an agent that runs a company: earn each capability, freeze dependents first, roll back what is reversible, escalate what a customer has already seen.</p>
     <a href="/">Procure-to-pay fleet</a>
   </footer>
+  <dialog id="guide" class="guide-dialog" aria-labelledby="guideTitle">
+    <div class="guide-body">
+      <div class="dialog-head"><p class="eyebrow">THE COMPANY COMPANY</p><button class="icon-button" id="closeGuide" type="button" aria-label="Close">×</button></div>
+      <h2 id="guideTitle">One agent. A separate permission for every tool.</h2>
+      <p>The Company Company runs a business through Slack, Linear, GitHub, Attio, and Stripe. We built this page around that agent: filing an issue, merging code, updating a deal, and sending an invoice should not share one credential.</p>
+      <p class="eyebrow">WHAT THIS IS</p>
+      <p>A working model of that idea. A customer asks in Slack for SSO. The agent does the four steps. The records are synthetic. No real repository, deal, or invoice is touched.</p>
+      <p class="eyebrow">WHAT TO PRESS</p>
+      <ol class="guide-steps">
+        <li><strong>Run the company agent.</strong> Linear, GitHub, Attio, and Stripe each earn their own passport. A refund and turning off branch protection stay refused.</li>
+        <li><strong>Freeze, then investigate.</strong> The Slack message that started the work was not the customer. Watch what freezes first, what rolls back, and what cannot be undone.</li>
+      </ol>
+      <p class="eyebrow">WHAT IT CAN SHOW</p>
+      <ol class="guide-steps">
+        <li>Authority earned per tool, after the work, not granted on day one.</li>
+        <li>Every later action that depended on a bad instruction, frozen before any model runs.</li>
+        <li>The issue, pull request, deal, and invoice rolled back. A production deploy and an email the customer already received, escalated.</li>
+      </ol>
+    </div>
+    <button class="button primary" id="startGuide" type="button">Show the run <span>→</span></button>
+  </dialog>
   <dialog id="receiptDialog">
     <div class="dialog-head"><p class="eyebrow">ACTION RECEIPT</p><button class="icon-button" id="closeReceipt" type="button" aria-label="Close">×</button></div>
     <h2 id="receiptTitle"></h2>

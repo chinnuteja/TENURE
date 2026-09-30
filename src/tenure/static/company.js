@@ -98,15 +98,17 @@ function paintChain(state, reverted) {
     const record = state?.[item.dataset.step];
     item.classList.remove("done", "reverted");
     const label = item.querySelector("em");
+    const id = item.querySelector("code");
     if (!record) {
-      label.textContent = "waiting";
+      label.textContent = "WAITING";
+      id.hidden = true;
       continue;
     }
     const undone = reverted?.has(record.entity_type);
     item.classList.add(undone ? "reverted" : "done");
-    label.textContent = undone
-      ? `${record.entity_id} · ${undone}`
-      : `${record.entity_id} · ${record.status}`;
+    label.textContent = undone || record.status;
+    id.hidden = false;
+    id.textContent = record.entity_id;
   }
 }
 
@@ -157,6 +159,18 @@ function openReceipt(receipt) {
 }
 
 $("closeReceipt").addEventListener("click", () => $("receiptDialog").close());
+
+function closeGuide() {
+  $("guide").close();
+  sessionStorage.setItem("tenure-company-guide", "seen");
+}
+$("closeGuide").addEventListener("click", closeGuide);
+$("startGuide").addEventListener("click", () => {
+  closeGuide();
+  $("runButton").focus();
+});
+$("openGuide").addEventListener("click", () => $("guide").showModal());
+if (!sessionStorage.getItem("tenure-company-guide")) $("guide").showModal();
 
 $("scenario").addEventListener("change", () => {
   const [title, copy] = reason[$("scenario").value];
