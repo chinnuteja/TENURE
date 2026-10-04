@@ -169,8 +169,14 @@ $("startGuide").addEventListener("click", () => {
   closeGuide();
   $("runButton").focus();
 });
-$("openGuide").addEventListener("click", () => $("guide").showModal());
-if (!sessionStorage.getItem("tenure-company-guide")) $("guide").showModal();
+function openGuide() {
+  const guide = $("guide");
+  if (!guide.open) guide.showModal();
+  $("guideTitle").setAttribute("tabindex", "-1");
+  $("guideTitle").focus();
+}
+$("openGuide").addEventListener("click", openGuide);
+if (!sessionStorage.getItem("tenure-company-guide")) openGuide();
 
 $("scenario").addEventListener("change", () => {
   const [title, copy] = reason[$("scenario").value];
